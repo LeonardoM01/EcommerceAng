@@ -7,7 +7,7 @@ import { Produto } from '../models/models';
     providedIn: 'root'
 })
 export class ProdutoService {
-    private apiUrl = 'https://localhost:7091/api/produtos';
+    private apiUrl = 'https://localhost:7150/api/produtos';
 
     constructor(private http: HttpClient) { }
 
@@ -16,7 +16,7 @@ export class ProdutoService {
     }
 
     getProduto(id: number): Observable<Produto> {
-        return this.http.get<Produto>(${this.apiUrl}/${id});
+        return this.http.get<Produto>(`${this.apiUrl}/${id}`);
     }
 
     createProduto(produto: Partial<Produto>): Observable<Produto> {

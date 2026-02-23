@@ -7,17 +7,17 @@ import { Pedido, StatusPedido } from '../models/models';
     providedIn: 'root'
 })
 export class PedidoService {
-    private apiUrl = 'https://localhost:7091/api/pedidos';
+    private apiUrl = 'https://localhost:7150/api/pedidos';
 
     constructor(private http: HttpClient) { }
 
     getPedidos(status?: StatusPedido): Observable<Pedido[]> {
-        const url = status !== undefined ? ${this.apiUrl}?status=${status} : this.apiUrl;
+        const url = status !== undefined ? `${this.apiUrl}?status=${status}` : this.apiUrl;
         return this.http.get<Pedido[]>(url);
     }
 
     getPedido(id: number): Observable<Pedido> {
-        return this.http.get<Pedido>(${this.apiUrl}/${id});
+        return this.http.get<Pedido>(`${this.apiUrl}/${id}`);
     }
 
     createPedido(pedido: Partial<Pedido>): Observable<Pedido> {
@@ -25,10 +25,10 @@ export class PedidoService {
     }
 
     pagarPedido(id: number): Observable<any> {
-        return this.http.put(${this.apiUrl}/${id}/pagar, {});
+        return this.http.post(`${this.apiUrl}/${id}/pagar`, {});
     }
 
     cancelarPedido(id: number): Observable<any> {
-        return this.http.put(${this.apiUrl}/${id}/cancelar, {});
+        return this.http.post(`${this.apiUrl}/${id}/cancelar`, {});
     }
 }
