@@ -21,7 +21,7 @@
                     <label>Produto</label>
                     <select [(ngModel)]="produtoSelecionadoId">
                         <option [ngValue]="null">-- Produto --</option>
-                        <option *ngFor="let p of produtos" [value]="p.id">{{p.nome}} - R$ {{p.preco | number:'1.2-2'}}
+                        <option *ngFor="let p of produtos" [value]="p.id">{{p.nome}} - {{ p.preco | currency:'BRL' }}
                         </option>
                     </select>
                 </div>
@@ -49,9 +49,8 @@
                         <tr *ngFor="let item of itensAtuais" style="border-bottom: 1px solid var(--border-color);">
                             <td style="padding: 0.5rem;">{{item.produto.nome}}</td>
                             <td style="padding: 0.5rem;">{{item.quantidade}}</td>
-                            <td style="padding: 0.5rem;">R$ {{item.produto.preco | number:'1.2-2'}}</td>
-                            <td style="padding: 0.5rem;">R$ {{(item.quantidade * item.produto.preco) | number:'1.2-2'}}
-                            </td>
+                            <td style="padding: 0.5rem;">{{ item.produto.preco | currency:'BRL' }}</td>
+                            <td style="padding: 0.5rem;">{{ (item.quantidade * item.produto.preco) | currency:'BRL' }}</td>
                             <td style="padding: 0.5rem;">
                                 <button class="danger" style="padding: 0.2rem 0.6rem; font-size: 0.8rem;"
                                     (click)="removerItem(item.produtoId)">Remover</button>
@@ -61,8 +60,7 @@
                 </table>
 
                 <div class="flex justify-between items-center mt-4">
-                    <h3 style="margin: 0; display: inline-block;">Total: <span class="text-success">R$ {{
-                            totalNovoPedido | number:'1.2-2' }}</span></h3>
+                    <h3 style="margin: 0; display: inline-block;">Total: <span class="text-success">{{ totalNovoPedido | currency:'BRL' }}</span></h3>
                     <button class="success" (click)="criarPedido()" [disabled]="!novoPedidoClienteId">Criar
                         Pedido</button>
                 </div>
@@ -101,7 +99,7 @@
                         <td>{{ pedido.id }}</td>
                         <td>{{ pedido.dataPedido | date:'dd/MM/yyyy HH:mm' }}</td>
                         <td>{{ getClienteNome(pedido.clienteId) }}</td>
-                        <td style="font-weight: 600;">R$ {{ pedido.valorTotal | number:'1.2-2' }}</td>
+                        <td style="font-weight: 600;">{{ pedido.valorTotal | currency:'BRL' }}</td>
                         <td>
                             <span [ngStyle]="{
                 'color': pedido.status === statusPedidoEnum.Pago ? 'var(--success)' :
