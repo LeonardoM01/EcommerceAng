@@ -8,8 +8,7 @@ import { Produto } from '../../models/models';
     selector: 'app-produtos',
     standalone: true,
     imports: [CommonModule, FormsModule],
-    templateUrl: './produtos.component.html',
-    styleUrls: ['./produtos.component.css']
+    templateUrl: './produtos.component.html'    
 })
 export class ProdutosComponent implements OnInit {
     produtos: Produto[] = [];

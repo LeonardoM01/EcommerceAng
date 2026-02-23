@@ -8,8 +8,7 @@ import { Cliente } from '../../models/models';
     selector: 'app-clientes',
     standalone: true,
     imports: [CommonModule, FormsModule],
-    templateUrl: './clientes.component.html',
-    styleUrls: ['./clientes.component.css']
+    templateUrl: './clientes.component.html'
 })
 export class ClientesComponent implements OnInit {
     clientes: Cliente[] = [];

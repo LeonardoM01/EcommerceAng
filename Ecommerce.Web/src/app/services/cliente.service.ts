@@ -7,7 +7,7 @@ import { Cliente } from '../models/models';
     providedIn: 'root'
 })
 export class ClienteService {
-    private apiUrl = 'https://localhost:7091/api/clientes';
+    private apiUrl = 'https://localhost:7150/api/clientes';
 
     constructor(private http: HttpClient) { }
 
@@ -16,7 +16,7 @@ export class ClienteService {
     }
 
     getCliente(id: number): Observable<Cliente> {
-        return this.http.get<Cliente>(${this.apiUrl}/${id});
+        return this.http.get<Cliente>(`${this.apiUrl}/${id}`);
     }
 
     createCliente(cliente: Partial<Cliente>): Observable<Cliente> {

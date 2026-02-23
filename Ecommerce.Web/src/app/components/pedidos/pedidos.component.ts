@@ -10,8 +10,7 @@ import { Pedido, Cliente, Produto, ItemPedido, StatusPedido } from '../../models
     selector: 'app-pedidos',
     standalone: true,
     imports: [CommonModule, FormsModule],
-    templateUrl: './pedidos.component.html',
-    styleUrls: ['./pedidos.component.css']
+    templateUrl: './pedidos.component.html'
 })
 export class PedidosComponent implements OnInit {
     pedidos: Pedido[] = [];
