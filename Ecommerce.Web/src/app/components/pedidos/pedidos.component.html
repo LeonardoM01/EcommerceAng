@@ -1,0 +1,132 @@
+<div class="container">
+    <h2>Pedidos</h2>
+
+    <div class="card mb-4 mt-4">
+        <h3>Novo Pedido</h3>
+
+        <div class="grid grid-cols-2 gap-4 mt-4">
+            <div>
+                <label>Selecione o Cliente</label>
+                <select [(ngModel)]="novoPedidoClienteId">
+                    <option [ngValue]="null">-- Selecione --</option>
+                    <option *ngFor="let c of clientes" [value]="c.id">{{c.nome}} (CPF: {{c.cpf}})</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="mt-4 border-top pt-4" style="border-top: 1px solid var(--border-color); padding-top: 1rem;">
+            <h4>Adicionar Itens</h4>
+            <div class="grid grid-cols-3 gap-4">
+                <div>
+                    <label>Produto</label>
+                    <select [(ngModel)]="produtoSelecionadoId">
+                        <option [ngValue]="null">-- Produto --</option>
+                        <option *ngFor="let p of produtos" [value]="p.id">{{p.nome}} - R$ {{p.preco | number:'1.2-2'}}
+                        </option>
+                    </select>
+                </div>
+                <div>
+                    <label>Quantidade</label>
+                    <input type="number" [(ngModel)]="quantidadeSelecionada" min="1">
+                </div>
+                <div class="flex items-center" style="margin-top: 1.5rem;">
+                    <button class="success" (click)="adicionarItem()">Adicionar Item</button>
+                </div>
+            </div>
+
+            <div *ngIf="itensAtuais.length > 0" class="mt-4">
+                <table style="width: 100%; border-collapse: collapse; margin-bottom: 1rem;">
+                    <thead style="border-bottom: 2px solid var(--border-color);">
+                        <tr>
+                            <th style="padding: 0.5rem; text-align: left; background: transparent;">Produto</th>
+                            <th style="padding: 0.5rem; text-align: left; background: transparent;">Qtd</th>
+                            <th style="padding: 0.5rem; text-align: left; background: transparent;">V. Unit.</th>
+                            <th style="padding: 0.5rem; text-align: left; background: transparent;">Subtotal</th>
+                            <th style="padding: 0.5rem; text-align: left; background: transparent;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of itensAtuais" style="border-bottom: 1px solid var(--border-color);">
+                            <td style="padding: 0.5rem;">{{item.produto.nome}}</td>
+                            <td style="padding: 0.5rem;">{{item.quantidade}}</td>
+                            <td style="padding: 0.5rem;">R$ {{item.produto.preco | number:'1.2-2'}}</td>
+                            <td style="padding: 0.5rem;">R$ {{(item.quantidade * item.produto.preco) | number:'1.2-2'}}
+                            </td>
+                            <td style="padding: 0.5rem;">
+                                <button class="danger" style="padding: 0.2rem 0.6rem; font-size: 0.8rem;"
+                                    (click)="removerItem(item.produtoId)">Remover</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="flex justify-between items-center mt-4">
+                    <h3 style="margin: 0; display: inline-block;">Total: <span class="text-success">R$ {{
+                            totalNovoPedido | number:'1.2-2' }}</span></h3>
+                    <button class="success" (click)="criarPedido()" [disabled]="!novoPedidoClienteId">Criar
+                        Pedido</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="flex justify-between items-center mb-4">
+            <h3 style="margin: 0;">Lista de Pedidos</h3>
+            <div style="width: 200px;">
+                <select [(ngModel)]="statusFiltro" (change)="carregarPedidos()"
+                    style="margin: 0; padding: 0.4rem 0.8rem;">
+                    <option value="">Todos os Status</option>
+                    <option [value]="statusPedidoEnum.Criado">Criado</option>
+                    <option [value]="statusPedidoEnum.Pago">Pago</option>
+                    <option [value]="statusPedidoEnum.Cancelado">Cancelado</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Data</th>
+                        <th>Cliente</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th>Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr *ngFor="let pedido of pedidos">
+                        <td>{{ pedido.id }}</td>
+                        <td>{{ pedido.dataPedido | date:'dd/MM/yyyy HH:mm' }}</td>
+                        <td>{{ getClienteNome(pedido.clienteId) }}</td>
+                        <td style="font-weight: 600;">R$ {{ pedido.valorTotal | number:'1.2-2' }}</td>
+                        <td>
+                            <span [ngStyle]="{
+                'color': pedido.status === statusPedidoEnum.Pago ? 'var(--success)' :
+                         pedido.status === statusPedidoEnum.Cancelado ? 'var(--danger)' : 'var(--warning)',
+                'font-weight': '600'
+              }">
+                                {{ getStatusName(pedido.status) }}
+                            </span>
+                        </td>
+                        <td>
+                            <div class="flex gap-4" *ngIf="pedido.status === statusPedidoEnum.Criado">
+                                <button class="success" style="padding: 0.3rem 0.8rem; font-size: 0.85rem;"
+                                    (click)="pagar(pedido.id)">Pagar</button>
+                                <button class="danger" style="padding: 0.3rem 0.8rem; font-size: 0.85rem;"
+                                    (click)="cancelar(pedido.id)">Cancelar</button>
+                            </div>
+                        </td>
+                    </tr>
+                    <tr *ngIf="pedidos.length === 0">
+                        <td colspan="6" style="text-align: center; color: var(--text-secondary)">
+                            Nenhum pedido encontrado.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
