@@ -28,7 +28,7 @@ public class PedidoService : IPedidoService
         return Task.FromResult(pedido);
     }
 
-    public Task<IEnumerable<Pedido>> ObterPedidosPorStatusAsync(StatusPedido status)    
+    public Task<IEnumerable<Pedido>> ObterPedidosPorStatusAsync(StatusPedido status)
     {
         var pedidos = _pedidos.Where(p => p.Status == status);
         return Task.FromResult(pedidos);
