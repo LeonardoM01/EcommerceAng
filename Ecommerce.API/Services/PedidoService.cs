@@ -41,7 +41,7 @@ public class PedidoService : IPedidoService
         pedido.Status = StatusPedido.Criado;
         _pedidos.Add(pedido);
 
-        await _historicoService.RegistrarHistoricoAsync(nameof(Pedido), pedido.Id, AcaoHistorico.Criacao, $"Pedido criado com status {pedido.Status}.");
+        await _historicoService.RegistrarHistorico(nameof(Pedido), pedido.Id, AcaoHistorico.Criacao, $"Pedido criado com status {pedido.Status}.");
 
         return pedido;
     }
@@ -53,7 +53,7 @@ public class PedidoService : IPedidoService
 
         pedido.Status = StatusPedido.Pago;
 
-        await _historicoService.RegistrarHistoricoAsync(nameof(Pedido), pedido.Id, AcaoHistorico.Alteracao, $"Pedido pago. Status atualizado para {pedido.Status}.");
+        await _historicoService.RegistrarHistorico(nameof(Pedido), pedido.Id, AcaoHistorico.Alteracao, $"Pedido pago. Status atualizado para {pedido.Status}.");
 
         return true;
     }
@@ -68,7 +68,7 @@ public class PedidoService : IPedidoService
 
         pedido.Status = StatusPedido.Cancelado;
 
-        await _historicoService.RegistrarHistoricoAsync(nameof(Pedido), pedido.Id, AcaoHistorico.Alteracao, $"Pedido cancelado. Status atualizado para {pedido.Status}.");
+        await _historicoService.RegistrarHistorico(nameof(Pedido), pedido.Id, AcaoHistorico.Alteracao, $"Pedido cancelado. Status atualizado para {pedido.Status}.");
 
         return true;
     }

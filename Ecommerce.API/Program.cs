@@ -10,7 +10,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 builder.Services.AddSingleton<IHistoricoService, HistoricoService>();
-builder.Services.AddSingleton<IClientService, ClientService>();
+builder.Services.AddSingleton<IClienteService, ClienteService>();
 builder.Services.AddSingleton<IProdutoService, ProdutoService>();
 builder.Services.AddSingleton<IPedidoService, PedidoService>();
 

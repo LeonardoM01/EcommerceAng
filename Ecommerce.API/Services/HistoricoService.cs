@@ -15,20 +15,21 @@ public class HistoricoService : IHistoricoService
         return Task.FromResult(_historicos.AsEnumerable());
     }
 
-    public Task<AsyncVoidMethodBuilder> AdicionarHistoricoAsync(string entidade, int entidadeId, AcaoHistorico acao, string detalhes)
+    public Task RegistrarHistorico(string entidade, int entidadeId, AcaoHistorico acao, string detalhes)
     {
         var historico = new Historico
         {
-            Id = _nextId++,
+            Id = _historicos.Count + 1,
             Entidade = entidade,
             EntidadeId = entidadeId,
             Acao = acao,
             Detalhes = detalhes,
             DataAlteracao = DateTime.UtcNow
-        };    
-        historico.Id = _historicos.Count + 1;
-        historico.DataAlteracao = DateTime.UtcNow;
-        _historicos.Add(historico);        
+        };
+
+        _historicos.Add(historico);
+
+        return Task.CompletedTask;
     }
 
     public Task<IEnumerable<Historico>> ObterHistoricosPorEntidadeAsync(string entidade, int entidadeId)

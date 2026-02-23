@@ -1,8 +1,8 @@
-using Ecommmerce.API.Models;
+using Ecommerce.API.Models;
 
 namespace Ecommerce.API.Interfaces
 {
-    public interface IClientService
+    public interface IClienteService
     {
         Task<IEnumerable<Cliente>> ObterTodosClientesAsync();
         Task<Cliente>? ObterClientePorIdAsync(int id);

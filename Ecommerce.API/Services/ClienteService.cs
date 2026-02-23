@@ -25,7 +25,7 @@ public class ClienteService : IClienteService
     {
         cliente.Id = _nextId++;
         _clientes.Add(cliente);
-        await _historicoService.RegistrarHistoricoAsync(nameof(Cliente), cliente.Id, AcaoHistorico.Criacao, $"Cliente {cliente.Nome} criado.");
+        await _historicoService.RegistrarHistorico(nameof(Cliente), cliente.Id, AcaoHistorico.Criacao, $"Cliente {cliente.Nome} criado.");
         return cliente;
     }
     public async Task<bool> AtualizarClienteAsync(int id, Cliente cliente)
@@ -35,7 +35,7 @@ public class ClienteService : IClienteService
 
         clienteExistente.Nome = cliente.Nome;
         clienteExistente.Cpf = cliente.Cpf;
-        await _historicoService.RegistrarHistoricoAsync(nameof(Cliente), clienteExistente.Id, AcaoHistorico.Alteracao, $"Cliente {clienteExistente.Nome} atualizado.");
+        await _historicoService.RegistrarHistorico(nameof(Cliente), clienteExistente.Id, AcaoHistorico.Alteracao, $"Cliente {clienteExistente.Nome} atualizado.");
         return true;
     }
 }
