@@ -1,0 +1,42 @@
+<div class="container">
+    <h2>Clientes</h2>
+
+    <div class="card mb-4 mt-4">
+        <h3>Novo Cliente</h3>
+        <div class="grid grid-cols-2 gap-4 mt-4">
+            <div>
+                <label>Nome</label>
+                <input type="text" [(ngModel)]="novoCliente.nome" placeholder="Digite o nome do cliente">
+            </div>
+            <div>
+                <label>CPF</label>
+                <input type="text" [(ngModel)]="novoCliente.cpf" placeholder="000.000.000-00">
+            </div>
+        </div>
+        <button class="success mt-4" (click)="salvarCliente()">Cadastrar Cliente</button>
+    </div>
+
+    <div class="table-container card">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nome</th>
+                    <th>CPF</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let cliente of clientes">
+                    <td>{{ cliente.id }}</td>
+                    <td>{{ cliente.nome }}</td>
+                    <td>{{ cliente.cpf }}</td>
+                </tr>
+                <tr *ngIf="clientes.length === 0">
+                    <td colspan="3" style="text-align: center; color: var(--text-secondary)">
+                        Nenhum cliente cadastrado.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
