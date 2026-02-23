@@ -6,20 +6,20 @@ namespace Ecommerce.API.Services;
 
 public class ClienteService : IClienteService
 {
-    private readonly List<Cliente> _clientes = new List<Cliente>();
+    private readonly List<Cliente> _clientes = new();
     private int _nextId = 1;
     private readonly IHistoricoService _historicoService;
     public ClienteService(IHistoricoService historicoService)
     {
         _historicoService = historicoService;
     }
-    public async Task<IEnumerable<Cliente>> ObterTodosClientesAsync()
+    public Task<IEnumerable<Cliente>> ObterTodosClientesAsync()
     {
-        return _clientes;
+        return Task.FromResult<IEnumerable<Cliente>>(_clientes);
     }
-    public async Task<Cliente>? ObterClientePorIdAsync(int id)
+    public Task<Cliente?> ObterClientePorIdAsync(int id)
     {
-        return _clientes.FirstOrDefault(c => c.Id == id);
+        return Task.FromResult(_clientes.FirstOrDefault(c => c.Id == id));
     }
     public async Task<Cliente> AdicionarClienteAsync(Cliente cliente)
     {
