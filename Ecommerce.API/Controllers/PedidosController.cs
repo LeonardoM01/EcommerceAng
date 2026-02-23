@@ -17,15 +17,12 @@ public class PedidosController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<ActionResult<IEnumerable<Pedido>>> GetPedidos([FromQuery] StatusPedido? status)
+    public async Task<IActionResult> GetPedidos([FromQuery] StatusPedido? status)
     {
         if (status.HasValue)
-        {
-            var pedido = await _pedidoService.ObterPedidosPorStatusAsync(status.Value);
-            return Ok(pedido);
-        }
-        var pedidos = await _pedidoService.ObterTodosPedidosAsync();
-        return Ok(pedidos);
+            return Ok(await _pedidoService.ObterPedidosPorStatusAsync(status.Value));
+
+        return Ok(await _pedidoService.ObterTodosPedidosAsync());
     }
 
     [HttpGet("{id}")]

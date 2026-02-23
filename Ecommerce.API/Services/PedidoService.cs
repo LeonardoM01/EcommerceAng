@@ -28,10 +28,10 @@ public class PedidoService : IPedidoService
         return Task.FromResult(pedido);
     }
 
-    public Task<Pedido?> ObterPedidosPorStatusAsync(StatusPedido status)
+    public Task<IEnumerable<Pedido>> ObterPedidosPorStatusAsync(StatusPedido status)    
     {
-        var pedido = _pedidos.FirstOrDefault(p => p.Status == status);
-        return Task.FromResult(pedido);
+        var pedidos = _pedidos.Where(p => p.Status == status);
+        return Task.FromResult(pedidos);
     }
 
     public async Task<Pedido> AdicionarPedidoAsync(Pedido pedido)
