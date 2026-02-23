@@ -21,7 +21,7 @@ public class PedidoService : IPedidoService
         return await Task.FromResult(_pedidos);
     }
 
-    public async Task<Pedido>? ObterPedidoPorStatus(StatusPedido status)
+    public async Task<Pedido>? ObterPedidosPorStatusAsync(StatusPedido status)
     {
         var pedido = _pedidos.FirstOrDefault(p => p.Status == status);
         return await Task.FromResult(pedido);
