@@ -25,10 +25,10 @@ export class PedidoService {
     }
 
     pagarPedido(id: number): Observable<any> {
-        return this.http.put(`${this.apiUrl}/${id}/pagar`, {});
+        return this.http.post(`${this.apiUrl}/${id}/pagar`, {});
     }
 
     cancelarPedido(id: number): Observable<any> {
-        return this.http.put(`${this.apiUrl}/${id}/cancelar`, {});
+        return this.http.post(`${this.apiUrl}/${id}/cancelar`, {});
     }
 }
