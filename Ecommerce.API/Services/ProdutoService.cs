@@ -29,7 +29,7 @@ public class ProdutoService : IProdutoService
 
     public async Task<Produto> AdicionarProdutoAsync(Produto produto)
     {
-        produto.Id = _produtos.Count + 1;
+        produto.Id = _nextId++;
         _produtos.Add(produto);
 
         await _historicoService.RegistrarHistorico(nameof(Produto), produto.Id, AcaoHistorico.Criacao, $"Produto {produto.Nome} criado com preço {produto.Preco}.");

@@ -19,7 +19,7 @@ public class HistoricoService : IHistoricoService
     {
         var historico = new Historico
         {
-            Id = _historicos.Count + 1,
+            Id = _nextId++,
             Entidade = entidade,
             EntidadeId = entidadeId,
             Acao = acao,
